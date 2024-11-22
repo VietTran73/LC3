@@ -1,0 +1,8 @@
+.ORIG x0
+
+LD R2, NUM
+
+HALT
+NUM .FILL 10
+
+.END
