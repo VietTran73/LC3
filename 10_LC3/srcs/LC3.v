@@ -109,7 +109,7 @@ always @ (posedge clk) begin
 		    STI:
 			state 	<= (indirect_step == 1) ? DRMUX : FETCH;
 		    
-		    default: DECODE;
+		    default: state <= DECODE;
 		    endcase
 		end
     	end
@@ -124,22 +124,26 @@ always @ (posedge clk) begin
 			state	<= FETCH;		
 	
 		default: state 	<= IDLE;
-		endcase 
+		endcase
+	    end
+	    else 
+			state 	<= IDLE; 
     	end
 	REGISTER_RD: begin
 		case (opCode) 
-	//	    ST, LDR, STI, STR:
-	//		state 	<= ADDRESS;
-		    ST:
-			state	<= ADDRESS;
-		    STI:
+		    ST, LDR, STI, STR:
 			state 	<= ADDRESS;
-		    STR: 
-			state 	<= ADDRESS;
-		    LDR:
-			state	<= ADDRESS;
+//		    ST:
+//			state	<= ADDRESS;
+//		    STI:
+//			state 	<= ADDRESS;
+//		    STR: 
+//			state 	<= ADDRESS;
+//		    LDR:
+//			state	<= ADDRESS;
 		    JMP:
 			state	<= FETCH;
+		   
 		default:
 			state	<= ALU;
 		endcase
